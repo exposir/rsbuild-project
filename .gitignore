@@ -5,12 +5,13 @@
 
 # Dist
 node_modules
+
 public/
+dist/
 
 # IDE
 .vscode/*
 !.vscode/extensions.json
 .idea
-
 
 yarn.lock
