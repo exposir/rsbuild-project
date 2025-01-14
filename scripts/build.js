@@ -2,15 +2,17 @@ const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
-try {
-  // 创建新的备份目录
-  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-  const backupDir = `dist_backup_${timestamp}`;
+const BACKUP_DIR = "dist_backup";
 
-  // 如果 dist 目录存在，创建备份
+try {
+  // 如果 dist 目录存在，创建或更新备份
   if (fs.existsSync("dist")) {
-    console.log(`正在创建备份: ${backupDir}`);
-    copyDirectory("dist", backupDir);
+    console.log(`正在创建/更新备份: ${BACKUP_DIR}`);
+    if (fs.existsSync(BACKUP_DIR)) {
+      // 如果备份目录已存在，先清空它
+      fs.rmSync(BACKUP_DIR, { recursive: true, force: true });
+    }
+    copyDirectory("dist", BACKUP_DIR);
   }
 
   // 运行 Rsbuild 构建
@@ -18,9 +20,9 @@ try {
   execSync("rsbuild build", { stdio: "inherit" });
 
   // 将备份中的文件合并到新的 dist 目录
-  if (fs.existsSync(backupDir)) {
+  if (fs.existsSync(BACKUP_DIR)) {
     console.log("正在合并旧文件到新的 dist 目录...");
-    mergeDirectories(backupDir, "dist");
+    mergeDirectories(BACKUP_DIR, "dist");
   }
 
   console.log("构建和合并完成");
