@@ -4,7 +4,10 @@
 const CACHE_NAME = "my-site-cache-v1";
 
 // 需要缓存的资源列表
-const urlsToCache = [];
+const urlsToCache = [
+  "/", // 根路径，通常对应 index.html
+  "/index.html", // 显式列出 index.html（以防根路径不默认到 index.html）
+];
 
 // 安装事件：预缓存资源
 self.addEventListener("install", (event) => {
