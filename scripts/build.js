@@ -5,6 +5,10 @@ const path = require("path");
 const BACKUP_DIR = "dist_backup";
 
 try {
+  // 运行 Rsbuild 构建
+  console.log("开始 Rsbuild 构建...");
+  execSync("rsbuild build", { stdio: "inherit" });
+
   // 如果 dist 目录存在，创建或更新备份
   if (fs.existsSync("dist")) {
     console.log(`正在创建/更新备份: ${BACKUP_DIR}`);
@@ -15,13 +19,9 @@ try {
     copyDirectory("dist", BACKUP_DIR);
   }
 
-  // 运行 Rsbuild 构建
-  console.log("开始 Rsbuild 构建...");
-  execSync("rsbuild build", { stdio: "inherit" });
-
-  // 将备份中的文件合并到新的 dist 目录
+  // 将备份中的文件合并回 dist 目录
   if (fs.existsSync(BACKUP_DIR)) {
-    console.log("正在合并旧文件到新的 dist 目录...");
+    console.log("正在将备份文件合并回 dist 目录...");
     mergeDirectories(BACKUP_DIR, "dist");
   }
 
@@ -46,9 +46,9 @@ function mergeDirectories(source, target) {
     } else {
       if (!fs.existsSync(targetPath)) {
         fs.copyFileSync(sourcePath, targetPath);
-        console.log(`保留旧文件: ${targetPath}`);
+        console.log(`添加文件: ${targetPath}`);
       } else {
-        console.log(`文件已存在，跳过: ${targetPath}`);
+        console.log(`文件已存在: ${targetPath}`);
       }
     }
   }
