@@ -44,11 +44,11 @@ function mergeDirectories(source, target) {
     if (fs.statSync(sourcePath).isDirectory()) {
       mergeDirectories(sourcePath, targetPath);
     } else {
-      if (!fs.existsSync(targetPath)) {
-        fs.copyFileSync(sourcePath, targetPath);
-        console.log(`添加文件: ${targetPath}`);
+      fs.copyFileSync(sourcePath, targetPath);
+      if (fs.existsSync(targetPath)) {
+        console.log(`替换文件: ${targetPath}`);
       } else {
-        console.log(`文件已存在: ${targetPath}`);
+        console.log(`添加文件: ${targetPath}`);
       }
     }
   }
