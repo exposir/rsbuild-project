@@ -1,7 +1,12 @@
 {
-    "build": {
-      "env": {
-        "VERCEL_FORCE_NO_BUILD_CACHE": "0"
-     }
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node",
+      "config": {
+        "buildCommand": "node scripts/build.js",
+        "outputDirectory": "dist"
+      }
     }
-  }
+  ]
+}

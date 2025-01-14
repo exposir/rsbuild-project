@@ -1,7 +1,7 @@
 const Hello = () => {
   return (
     <div className="content">
-      <h1>Hello6</h1>
+      <h1>Hello9</h1>
       <p>Hello.</p>
     </div>
   );
