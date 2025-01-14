@@ -18,6 +18,11 @@ try {
   }
 
   console.log("构建和合并完成");
+
+  // 将 dist 文件夹复制到 public
+  copyDirectory("dist", "public");
+
+  console.log("dist 文件夹已复制到 public");
 } catch (error) {
   console.error("发生错误：", error);
   // 如果发生错误，恢复备份
@@ -52,6 +57,32 @@ function mergeDirectories(source, target) {
         // 如果文件已存在，可以根据需要进行比较或其他操作
         console.log(`文件已存在，跳过: ${targetPath}`);
       }
+    }
+  }
+}
+
+function copyDirectory(source, target) {
+  // 如果目标目录存在，先删除它
+  if (fs.existsSync(target)) {
+    fs.rmSync(target, { recursive: true, force: true });
+  }
+
+  // 创建新的目标目录
+  fs.mkdirSync(target, { recursive: true });
+
+  // 读取源目录中的所有项目
+  const items = fs.readdirSync(source);
+
+  for (const item of items) {
+    const sourcePath = path.join(source, item);
+    const targetPath = path.join(target, item);
+
+    if (fs.statSync(sourcePath).isDirectory()) {
+      // 如果是目录，递归复制
+      copyDirectory(sourcePath, targetPath);
+    } else {
+      // 如果是文件，直接复制
+      fs.copyFileSync(sourcePath, targetPath);
     }
   }
 }
