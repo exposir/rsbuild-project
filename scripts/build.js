@@ -14,15 +14,10 @@ try {
   // 如果有备份，将旧文件合并到新的 dist 目录
   if (fs.existsSync("dist_backup")) {
     mergeDirectories("dist_backup", "dist");
-    fs.rmSync("dist_backup", { recursive: true, force: true });
+    // fs.rmSync("dist_backup", { recursive: true, force: true });
   }
 
   console.log("构建和合并完成");
-
-  // 将 dist 文件夹复制到 public
-  copyDirectory("dist", "public");
-
-  console.log("dist 文件夹已复制到 public");
 } catch (error) {
   console.error("发生错误：", error);
   // 如果发生错误，恢复备份

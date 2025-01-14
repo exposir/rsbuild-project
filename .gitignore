@@ -6,7 +6,7 @@
 # Dist
 node_modules
 
-public/
+dist/
 
 # IDE
 .vscode/*
