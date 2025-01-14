@@ -1,0 +1,17 @@
+{
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/node",
+        "config": {
+          "buildCommand": "rsbuild build",
+          "outputDirectory": "dist"
+        }
+      }
+    ],
+    "build": {
+      "env": {
+        "VERCEL_FORCE_NO_BUILD_CACHE": "0"
+     }
+    }
+  }
